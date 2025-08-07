@@ -12,3 +12,20 @@ otherwise start like:
 `
 python client.py
 `
+
+and to test from cli:
+
+test deletion
+`
+curl "http://localhost:8002/test_deletion"
+`
+
+test overwrite
+`
+curl "http://localhost:8002/test_overwrite"
+`
+
+test getting a specific key
+`
+curl "http://localhost:8002/test_get/testkey"
+`

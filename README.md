@@ -2,7 +2,7 @@
 
 A key-value store with multiple language implementations and storage backends.
 
-## 🏗️ Architecture
+## Architecture
 
 This project consists of two complete implementations of a key-value store:
 
@@ -13,11 +13,11 @@ Each implementation supports multiple storage backends:
 - **Redis** - Persistent, distributed storage
 - **In-Memory** - Fast, ephemeral storage (default)
 
-## See the individual README in each of the *_code/ dirs for specific instructions
+## * See the individual README in each of the *_code/ dirs for specific instructions
 
 
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 censys-test/

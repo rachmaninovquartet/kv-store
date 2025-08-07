@@ -13,7 +13,7 @@ conda activate censys-env
 STORAGE_TYPE=redis python server/server.py # omit storage type to run in memory kv store
 
 conda activate censys-env
-SERVER_URL=http://localhost:8000 python server/client.py 
+SERVER_URL=http://localhost:8000 python test_client/client.py 
 ```
 
 ## 📋 SERVER API Endpoints
@@ -58,6 +58,13 @@ docker-compose up -d --build
 ```
 
 ### Test Client
+
+| Method |	Endpoint |	Description |
+|--------|-----------|--------------|
+| GET |	/test_deletion | Test deletion workflow (set → check → delete) |	
+| GET	|	/test_overwrite	|	Test overwrite workflow (set → overwrite → verify) |	
+| GET	|	/test_get/{key}	|	Test getting a specific key from server |	
+| GET	|	/test_list_keys	|	Test listing all keys from server |	
 
 The Python implementation includes a test client that automates testing:
 

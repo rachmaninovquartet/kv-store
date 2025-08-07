@@ -57,14 +57,13 @@ cd py_code
 docker-compose up -d --build
 ```
 
-### Test Client
+### Test Client Endpoints
 
 | Method |	Endpoint |	Description |
 |--------|-----------|--------------|
 | GET |	/test_deletion | Test deletion workflow (set → check → delete) |	
 | GET	|	/test_overwrite	|	Test overwrite workflow (set → overwrite → verify) |	
 | GET	|	/test_get/{key}	|	Test getting a specific key from server |	
-| GET	|	/test_list_keys	|	Test listing all keys from server |	
 
 The Python implementation includes a test client that automates testing:
 
@@ -115,11 +114,3 @@ FastAPI automatically generates interactive API documentation:
 - **Python**: 3.11+ with conda environment
 - **Docker**: 20.10+
 - **Redis**: 7.0+ (optional, for Redis backend)
-
-### Local Development
-
-```bash
-# Python development from py_code/
-conda activate censys-env
-pip install -r server/requirements.txt
-python server/server.py

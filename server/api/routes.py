@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
-from server.services.key_value_service import KeyValueService
-from server.models.responses import MessageResponse, ValueResponse, KeyValue
+from services.key_value_service import KeyValueService
+from models.responses import MessageResponse, ValueResponse, KeyValue
 from init_app import get_service, get_storage_type, get_store
-from server.storage.redis_store import RedisStore
-from server.storage.in_memory_store import InMemoryStore
+from storage.redis_store import RedisStore
+from storage.in_memory_store import InMemoryStore
 
 # Create a router instead of a separate app
 router = APIRouter()

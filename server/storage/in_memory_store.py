@@ -1,5 +1,5 @@
 from typing import Any, Dict, Optional
-from server.storage.key_value_store import KeyValueStore
+from storage.key_value_store import KeyValueStore
 
 
 """

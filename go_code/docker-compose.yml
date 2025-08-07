@@ -1,0 +1,57 @@
+services:
+  # Redis service
+  redis:
+    image: redis:7-alpine
+    container_name: censys-redis-go
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - censys-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Main server service
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: censys-server-go
+    ports:
+      - "8000:8000"
+    environment:
+      - STORAGE_TYPE=redis
+      - REDIS_ADDR=redis:6379
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - censys-network
+    restart: unless-stopped
+
+  # Test client service
+  test-client:
+    build:
+      context: ./test_client
+      dockerfile: Dockerfile
+    container_name: censys-test-client-go
+    ports:
+      - "8002:8002"
+    environment:
+      - SERVER_URL=http://server:8000
+    depends_on:
+      - server
+    networks:
+      - censys-network
+    restart: unless-stopped
+
+volumes:
+  redis_data:
+
+networks:
+  censys-network:
+    driver: bridge 

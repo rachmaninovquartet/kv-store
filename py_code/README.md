@@ -53,8 +53,13 @@ The Python implementation includes three Docker services:
 - **Test Client** (port 8002) - Test automation
 
 ```bash
-cd py_code
+# in py_code/
 docker-compose up -d --build
+
+# verify everything works
+chmod +x test_all.sh
+sh test_all.sh
+
 ```
 
 ### Test Client Endpoints

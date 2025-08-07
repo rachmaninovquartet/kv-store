@@ -2,7 +2,7 @@ import uvicorn
 import redis
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
-from init_app import get_storage_type, get_store
+from init_server import get_storage_type, get_store
 from storage.redis_store import RedisStore
 from api.routes import router
 
@@ -38,4 +38,4 @@ app = FastAPI(title="Key-Value Store API", lifespan=lifespan)
 app.include_router(router)
 
 if __name__ == "__main__":
-    uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=True) 
+    uvicorn.run("server:app", host="0.0.0.0", port=8000, reload=True) 

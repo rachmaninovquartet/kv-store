@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from services.key_value_service import KeyValueService
 from models.responses import MessageResponse, ValueResponse, KeyValue
-from init_app import get_service, get_storage_type, get_store
+from init_server import get_service, get_storage_type, get_store
 from storage.redis_store import RedisStore
 from storage.in_memory_store import InMemoryStore
 

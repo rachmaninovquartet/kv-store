@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from server.services.key_value_service import KeyValueService
+from server.models.responses import MessageResponse, ValueResponse, KeyValue
 from init_app import get_service, get_storage_type, get_store
 from server.storage.redis_store import RedisStore
 from server.storage.in_memory_store import InMemoryStore
-from server.models.responses import MessageResponse, ValueResponse, KeyValue
 
 # Create a router instead of a separate app
 router = APIRouter()
@@ -17,7 +17,7 @@ async def store_key_value(
     item: KeyValue,
     service: KeyValueService = Depends(get_service)
 ):
-    success = await service.store_key_value(item.key, item.value, item.ttl)
+    success = await service.set_key_value(item.key, item.value, item.ttl)
     if not success:
         raise HTTPException(status_code=500, detail="Failed to store key-value pair")
     return MessageResponse(message=f"Key '{item.key}' stored successfully")

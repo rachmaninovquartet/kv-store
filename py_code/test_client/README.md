@@ -1,31 +1,117 @@
-First install the requirements file #TODO save current requirements
-`
-pip install -r requirements.txt
-`
+## 🚀 Quick Start
 
-The test client relies on an env variable for the server url:
-`
-SERVER_URL=http://localhost:8000 python client.py
-`
+### Python Implementation
 
-otherwise start like:
-`
-python client.py
-`
+```bash
+# Navigate to Python implementation
+cd py_code
 
-and to test from cli:
+# Run with Docker (recommended)
+docker-compose up -d --build
 
-test deletion
-`
+# Or run locally
+conda activate censys-env
+STORAGE_TYPE=redis python server/server.py # omit storage type to run in memory kv store
+```
+
+## 📋 API Endpoints
+
+Both implementations provide the same REST API:
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/set` | Set a key-value pair |
+| `GET` | `/get/{key}` | Get value by key |
+| `DELETE` | `/delete/{key}` | Delete a key |
+| `GET` | `/exists/{key}` | Check if key exists |
+
+### Example Usage
+
+```bash
+# Set a key-value pair
+curl -X POST "http://localhost:8000/set" \
+  -H "Content-Type: application/json" \
+  -d '{"key": "mykey", "value": "myvalue", "ttl": 3600}'
+
+# Get a value
+curl "http://localhost:8000/get/mykey"
+
+# Delete a key
+curl -X DELETE "http://localhost:8000/delete/mykey"
+```
+
+## 🐳 Docker Setup
+
+### Python Services
+
+The Python implementation includes three Docker services:
+
+- **Redis** (port 6379) - Database
+- **Server** (port 8000) - Main API
+- **Test Client** (port 8002) - Test automation
+
+```bash
+cd py_code
+docker-compose up -d --build
+```
+
+### Test Client
+
+The Python implementation includes a test client that automates testing:
+
+```bash
+# Test deletion workflow
 curl "http://localhost:8002/test_deletion"
-`
 
-test overwrite
-`
+# Test overwrite workflow
 curl "http://localhost:8002/test_overwrite"
-`
 
-test getting a specific key
-`
-curl "http://localhost:8002/test_get/testkey"
-`
+# Test getting a specific key
+curl "http://localhost:8002/test_get/mykey"
+```
+
+## 🔧 Configuration
+
+### Environment Variables
+
+- `STORAGE_TYPE` - Storage backend (`redis` or `memory`)
+- `REDIS_HOST` - Redis host (default: `localhost`)
+- `REDIS_PORT` - Redis port (default: `6379`)
+
+
+## 🧪 Testing
+
+### Manual Testing
+
+```bash
+# Test the main server
+curl "http://localhost:8000/"
+curl -X POST "http://localhost:8000/set" \
+  -H "Content-Type: application/json" \
+  -d '{"key": "test", "value": "hello"}'
+curl "http://localhost:8000/get/test"
+```
+
+### API Documentation
+
+FastAPI automatically generates interactive API documentation:
+
+- **Swagger UI**: http://localhost:8000/docs
+- **ReDoc**: http://localhost:8000/redoc
+
+## 🛠️ Development
+
+### Prerequisites
+
+- **Python**: 3.11+ with conda environment
+- **Docker**: 20.10+
+- **Redis**: 7.0+ (optional, for Redis backend)
+
+### Local Development
+
+```bash
+# Python development
+cd py_code
+conda activate censys-env
+pip install -r server/requirements.txt
+python server/server.py

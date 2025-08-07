@@ -96,6 +96,7 @@ go_code/
 ├── server/
 │   ├── main.go           # Main application
 │   ├── api/routes.go         # API routes
+│   ├── handlers/key_value_handlers.go         # API routes handlers
 │   ├── init.go           # Service initialization
 |   ├── models/responses.go   # Responses
 │   ├── services/         # Business logic
@@ -104,6 +105,7 @@ go_code/
 ├── test_client/
 │   ├── main.go           # Test client app
 │   ├── api/routes.go         # Test endpoints
+│   ├── handlers/test_handlers.go         # test handlers
 |   ├── models/responses.go   # Responses
 │   └── Dockerfile
 ├── docker-compose.yml

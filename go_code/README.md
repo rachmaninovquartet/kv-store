@@ -2,7 +2,7 @@
 
 A Gin-based key-value store server with support for multiple storage backends.
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Install Dependencies
 
@@ -25,7 +25,7 @@ cd server
 go run .
 ```
 
-## 📋 API Testing
+## API Testing
 
 ### Set a Value
 
@@ -53,7 +53,7 @@ curl -X DELETE "http://localhost:8000/delete/testkey"
 curl "http://localhost:8000/exists/testkey"
 ```
 
-## 🐳 Docker Setup
+## Docker Setup
 
 ### Run with Docker
 

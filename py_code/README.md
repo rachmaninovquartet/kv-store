@@ -3,18 +3,20 @@
 ### Python Implementation
 
 ```bash
-# Navigate to Python implementation
-cd py_code
+# in  py_code/
 
 # Run with Docker (recommended)
 docker-compose up -d --build
 
-# Or run locally
+# Or run locally in two terminals
 conda activate censys-env
 STORAGE_TYPE=redis python server/server.py # omit storage type to run in memory kv store
+
+conda activate censys-env
+SERVER_URL=http://localhost:8000 python server/client.py 
 ```
 
-## 📋 API Endpoints
+## 📋 SERVER API Endpoints
 
 Both implementations provide the same REST API:
 
@@ -110,8 +112,7 @@ FastAPI automatically generates interactive API documentation:
 ### Local Development
 
 ```bash
-# Python development
-cd py_code
+# Python development from py_code/
 conda activate censys-env
 pip install -r server/requirements.txt
 python server/server.py

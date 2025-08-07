@@ -1,4 +1,4 @@
-First install the requirements file #TODO save current requirements
+First install the requirements file
 `
 pip install -r requirements.txt
 `
@@ -15,24 +15,24 @@ python server.py
 
 and to test from cli:
 
-set a value
+#set a value
 `
 curl -X POST "http://localhost:8000/set" \
   -H "Content-Type: application/json" \
   -d '{"key": "testkey", "value": "testvalue"}'
 `
 
-get a value
+#get a value
 `
 curl "http://localhost:8000/get/testkey"
 `
 
-delete a key
+#delete a key
 `
 curl -X DELETE "http://localhost:8000/delete/testkey"
 `
 
-verify deletion
+#verify deletion
 `
 curl "http://localhost:8000/exists/testkey"
 `

@@ -39,22 +39,32 @@ func (s *InMemoryStore) Store(key string, value interface{}, ttl *time.Duration)
 // Retrieve retrieves a value by key
 func (s *InMemoryStore) Retrieve(key string) interface{} {
 	s.mu.RLock()
-	defer s.mu.RUnlock()
-
 	value, exists := s.data[key]
 	if !exists {
+		s.mu.RUnlock()
 		return nil
 	}
 
-	// Check TTL
-	if ttl, hasTTL := s.ttl[key]; hasTTL && time.Now().After(ttl) {
-		// Value has expired, remove it
-		s.mu.RUnlock()
+	// Check TTL while holding read lock
+	ttl, hasTTL := s.ttl[key]
+	expired := hasTTL && time.Now().After(ttl)
+	s.mu.RUnlock()
+
+	// If expired, clean up with write lock
+	if expired {
 		s.mu.Lock()
-		delete(s.data, key)
-		delete(s.ttl, key)
+		// Double-check that the key still exists and is still expired
+		if currentValue, stillExists := s.data[key]; stillExists {
+			if currentTTL, stillHasTTL := s.ttl[key]; stillHasTTL && time.Now().After(currentTTL) {
+				delete(s.data, key)
+				delete(s.ttl, key)
+			} else {
+				// Key was updated, return the current value
+				s.mu.Unlock()
+				return currentValue
+			}
+		}
 		s.mu.Unlock()
-		s.mu.RLock()
 		return nil
 	}
 

@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"time"
 
+	"server/interfaces"
+
 	"github.com/redis/go-redis/v9"
 )
 
@@ -14,7 +16,7 @@ type RedisStore struct {
 }
 
 // NewRedisStore creates a new Redis store
-func NewRedisStore(addr string) *RedisStore {
+func NewRedisStore(addr string) interfaces.KeyValueStore {
 	client := redis.NewClient(&redis.Options{
 		Addr: addr,
 	})

@@ -1,17 +1,17 @@
 package services
 
 import (
-	"server/storage"
+	"server/interfaces"
 	"time"
 )
 
 // KeyValueService provides business logic for key-value operations
 type KeyValueService struct {
-	store storage.KeyValueStore
+	store interfaces.KeyValueStore
 }
 
 // NewKeyValueService creates a new key-value service
-func NewKeyValueService(store storage.KeyValueStore) *KeyValueService {
+func NewKeyValueService(store interfaces.KeyValueStore) *KeyValueService {
 	return &KeyValueService{
 		store: store,
 	}

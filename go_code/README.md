@@ -94,21 +94,29 @@ curl "http://localhost:8002/test_get/mykey"
 ```
 go_code/
 ├── server/
-│   ├── main.go           # Main application
-│   ├── api/routes.go         # API routes
-│   ├── handlers/key_value_handlers.go         # API routes handlers
-│   ├── init.go           # Service initialization
-|   ├── models/responses.go   # Responses
-│   ├── services/         # Business logic
-│   ├── storage/          # Storage backends
-│   └── Dockerfile
+│   ├── main.go                    # Main application
+│   ├── init_app.go                # Service initialization
+│   ├── api/routes.go              # API route definitions
+│   ├── handlers/key_value_handlers.go  # API handlers
+│   ├── interfaces/                # Shared interfaces
+│   │   ├── key_value_service.go  # Service interface
+│   │   └── storage.go            # Storage interface
+│   ├── models/responses.go        # Response models
+│   ├── services/key_value_service.go   # Business logic
+│   ├── storage/                   # Storage backends
+│   │   ├── in_memory_store.go    # In-memory implementation
+│   │   └── redis_store.go        # Redis implementation
+│   ├── Dockerfile
+│   └── README.md
 ├── test_client/
-│   ├── main.go           # Test client app
-│   ├── api/routes.go         # Test endpoints
-│   ├── handlers/test_handlers.go         # test handlers
-|   ├── models/responses.go   # Responses
-│   └── Dockerfile
+│   ├── main.go                    # Test client app
+│   ├── api/routes.go              # Test route definitions
+│   ├── handlers/test_handlers.go  # Test handlers
+│   ├── models/responses.go        # Response models
+│   ├── Dockerfile
+│   └── README.md
 ├── docker-compose.yml
 ├── go.mod
+├── go.sum
 └── README.md
 ``` 

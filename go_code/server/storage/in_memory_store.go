@@ -3,6 +3,8 @@ package storage
 import (
 	"sync"
 	"time"
+
+	"server/interfaces"
 )
 
 // InMemoryStore provides in-memory key-value storage
@@ -13,7 +15,7 @@ type InMemoryStore struct {
 }
 
 // NewInMemoryStore creates a new in-memory store
-func NewInMemoryStore() *InMemoryStore {
+func NewInMemoryStore() interfaces.KeyValueStore {
 	return &InMemoryStore{
 		data: make(map[string]interface{}),
 		ttl:  make(map[string]time.Time),

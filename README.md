@@ -36,8 +36,25 @@ censys-test/
 │       ├── client.py         # Test client app
 │       └── api/routes.py     # Test endpoints
 └── go_code/                  # Go implementation
-    ├── main.go               # Main application
-    ├── handlers/             # HTTP handlers
-    ├── storage/              # Storage backends
-    └── models/               # Data structures
+    ├── docker-compose.yml    # Docker orchestration
+    ├── server/               # Main API server
+    │   ├── Dockerfile
+    │   ├── main.go           # Main application
+    │   ├── api/routes.go     # API route definitions
+    │   ├── handlers/         # HTTP handlers
+    │   │   └── key_value_handlers.go
+    │   ├── interfaces/       # Shared interfaces
+    │   │   ├── key_value_service.go
+    │   │   └── storage.go
+    │   ├── services/         # Business logic
+    │   ├── storage/          # Storage backends
+    │   │   ├── in_memory_store.go
+    │   │   └── redis_store.go
+    │   └── models/           # Data models
+    └── test_client/          # Test automation
+        ├── Dockerfile
+        ├── main.go           # Test client app
+        ├── api/routes.go     # Test route definitions
+        └── handlers/         # Test handlers
+            └── test_handlers.go
 ```

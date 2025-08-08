@@ -9,10 +9,12 @@
 docker-compose up -d --build
 
 # Or run locally in two terminals
-conda activate censys-env
+pip install -r requirements.txt
+
+#terminal 1
 STORAGE_TYPE=redis python server/server.py # omit storage type to run in memory kv store
 
-conda activate censys-env
+#terminal 2
 SERVER_URL=http://localhost:8000 python test_client/client.py 
 ```
 

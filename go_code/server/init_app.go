@@ -4,19 +4,12 @@ import (
 	"log"
 	"os"
 
+	"server/interfaces"
 	"server/services"
 	"server/storage"
 
 	"github.com/gin-gonic/gin"
 )
-
-// KeyValueService interface for dependency injection
-type KeyValueService interface {
-	SetKeyValue(key string, value interface{}, ttl *int) bool
-	GetValue(key string) interface{}
-	DeleteKey(key string) bool
-	KeyExists(key string) bool
-}
 
 // getStorageType returns the storage type from environment
 func getStorageType() string {
@@ -28,7 +21,7 @@ func getStorageType() string {
 }
 
 // createStore creates a new store based on configuration
-func createStore() storage.KeyValueStore {
+func createStore() interfaces.KeyValueStore {
 	storageType := getStorageType()
 
 	switch storageType {
@@ -46,7 +39,7 @@ func createStore() storage.KeyValueStore {
 }
 
 // getService creates a new service instance
-func getService() KeyValueService {
+func getService() interfaces.KeyValueService {
 	store := createStore()
 	return services.NewKeyValueService(store)
 }

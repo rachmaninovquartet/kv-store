@@ -3,6 +3,7 @@ package handlers
 import (
 	"net/http"
 
+	"server/interfaces"
 	"server/models"
 
 	"github.com/gin-gonic/gin"
@@ -13,14 +14,6 @@ type KeyValue struct {
 	Key   string      `json:"key" binding:"required"`
 	Value interface{} `json:"value" binding:"required"`
 	TTL   *int        `json:"ttl,omitempty"`
-}
-
-// KeyValueService interface for dependency injection
-type KeyValueService interface {
-	SetKeyValue(key string, value interface{}, ttl *int) bool
-	GetValue(key string) interface{}
-	DeleteKey(key string) bool
-	KeyExists(key string) bool
 }
 
 // RootHandler handles the root endpoint
@@ -36,7 +29,7 @@ func SetKeyValueHandler(c *gin.Context) {
 		return
 	}
 
-	service := c.MustGet("service").(KeyValueService)
+	service := c.MustGet("service").(interfaces.KeyValueService)
 	success := service.SetKeyValue(item.Key, item.Value, item.TTL)
 
 	if !success {
@@ -50,7 +43,7 @@ func SetKeyValueHandler(c *gin.Context) {
 // GetValueHandler handles getting a value by key
 func GetValueHandler(c *gin.Context) {
 	key := c.Param("key")
-	service := c.MustGet("service").(KeyValueService)
+	service := c.MustGet("service").(interfaces.KeyValueService)
 	value := service.GetValue(key)
 
 	if value == nil {
@@ -64,7 +57,7 @@ func GetValueHandler(c *gin.Context) {
 // DeleteKeyHandler handles deleting a key
 func DeleteKeyHandler(c *gin.Context) {
 	key := c.Param("key")
-	service := c.MustGet("service").(KeyValueService)
+	service := c.MustGet("service").(interfaces.KeyValueService)
 	success := service.DeleteKey(key)
 
 	if !success {
@@ -78,7 +71,7 @@ func DeleteKeyHandler(c *gin.Context) {
 // KeyExistsHandler handles checking if a key exists
 func KeyExistsHandler(c *gin.Context) {
 	key := c.Param("key")
-	service := c.MustGet("service").(KeyValueService)
+	service := c.MustGet("service").(interfaces.KeyValueService)
 	exists := service.KeyExists(key)
 
 	c.JSON(http.StatusOK, gin.H{"exists": exists})
